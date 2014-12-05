@@ -1,41 +1,93 @@
 loopback-example-m~~v~~c
 ===
 
-A [loopback](http://loopback.io/) MVC boilerplate. It supports [Sails.js](https://github.com/balderdashy/sails)-like services, and features tests for controllers, models, and services. At the moment, views are not implemented in this boilerplate.
+A [LoopBack](http://loopback.io/) M~~V~~C boilerplate. It supports [Sails.js](https://github.com/balderdashy/sails)-like services, and contains tests for LoopBack controllers, models, and services. At the moment, views are not implemented in this boilerplate.
 
 ## Models
 
-Please take a look at the [loopback documentation](http://docs.strongloop.com/display/public/LB/Creating+models) for creating new models.
+In this boilerplate, models are just plain, vanilla LoopBack models. 
 
-Models are saved under the [common/models](common/models) directory.
+Please take a look at the [LoopBack documentation](http://docs.strongloop.com/display/public/LB/Creating+models) for creating new models.
+
+By convention, models are saved under the [common/models](common/models) directory.
 
 ## ~~Views~~
 
-Currently not implemented because we currently do not need them, but please feel free to submit a pull request if you have a cool solution for implementing views!
+Currently not implemented because our company currently has no need for them, but please feel free to submit a pull request if you have a cool solution for implementing views.
 
 ## Controllers
 
-Controllers are essentially equivalent to `loopback` models, and adding a new controller is the same as adding a new `loopback` model: 
-	
-````
-slc loopback:model
-````
+Controllers are essentially equivalent to LoopBack models, and controller methods are implemented as LoopBack model remote methods. This means that all model functionality works for controllers as well (ACLs, validations, and so on).
 
-The new controller is saved under the `common/models` folder, but running `node .` to start the server activates the [add-controllers.js]() boot script, which transfers all files containing `-controller` into the `common/controllers` folder.
+Please take a look at the [LoopBack documentation](http://docs.strongloop.com/display/public/LB/Remote+methods) to learn more about how to define remote methods.
 
-Notice that `common/controllers` is listed as a model source directory in [model-config.json](), so `loopback` should be able to search for controllers under this directory.
+By convention, controller files should end in `-controller.js`. This ensures that any controller files created through the `slc loopback:model` generator are moved from the initial `common/models` folder into the `common/controllers` directory. Starting the server automatically activates the [add-controllers.js]() boot script which facilitates this transfer.
 
-Please take a look at [example-controller.js]() to see how to set controller routes.
+Please note that `common/controllers` is listed as a model source directory in [model-config.json](), so LoopBack should have no trouble finding the controllers.
 
-Controllers are saved under the [common/controllers](common/controllers) directory.
+By convention, controllers are saved under the [common/controllers](common/controllers) directory.
+
+#### Example 
+```javascript
+// common/controllers/example-controller.js
+
+var ControllerService = require('../services/controller-service');
+var ExampleService = require('../services/example-service');
+
+module.exports = function(ExampleController) {
+  
+  //
+  // Define controller methods by binding them to the controller 
+  // object, exactly how you would define LoopBack model remote methods.
+  //
+  ExampleController.sayHi = function(req, callback) {
+    callback(null, { message: 'Hi!' });
+  };
+
+  //
+  // An example of how services can be used. Controller routes 
+  // are set using a helper from ControllerService.
+  //
+  ControllerService.setMethods(ExampleController, [
+    {
+      method: 'sayHi',
+      http: {
+        path: '/hi',
+        verb: 'get'
+      }  
+    },
+    {
+      method: 'callExampleService',
+      http: {
+        path: '/callService',
+        verb: 'get'
+      }  
+    }
+  ]);
+};
+```
 
 ## Services
 
 Mirroring Sails.js, services are shared libraries that can be used in different parts of the application, either in controllers, in models, or in other services as well.
 
-Please take a look at [example-service.js]() to see how to implement services.
+By convention, services are saved under the [common/services](common/services) directory.
 
-Services are saved under the [common/services](common/services) directory.
+#### Example
+```javascript
+// common/services/example-service.js
+
+var ExampleService = {};
+
+//
+// Services are just exported modules.
+//
+ExampleService.echo = function(string) {
+  return string;
+};
+
+module.exports = ExampleService;
+```
 
 ## Tests
 
@@ -47,4 +99,29 @@ To run all tests, simply run the following command from the project root directo
 npm test
 ````
 
-Sample controller, model, and service tests are saved under the [test](test) directory.
+By convention, unit tests for controllers, models, and services are saved under their own respective directories under [test](test).
+
+#### Example
+```javascript
+// test/services/example-service-test.js
+
+var assert = require('assert');
+var ExampleService = require('../../common/services/example-service');
+
+//
+// Test the example service.
+//
+describe('ExampleService', function() {
+
+  //
+  // Test the 'echo' method.
+  //
+  describe('#echo', function() {
+    it('should return the correct response, the same exact string passed in', 
+      function() {
+        var testString = 'Hello!';
+        assert.equal(ExampleService.echo(testString), testString);
+      });
+  });
+});
+```

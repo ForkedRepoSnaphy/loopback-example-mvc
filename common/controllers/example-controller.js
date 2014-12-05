@@ -1,18 +1,15 @@
-var _ = require('lodash');
-var server = require('../../server/server');
-
 var ControllerService = require('../services/controller-service');
 var ExampleService = require('../services/example-service');
 
 module.exports = function(ExampleController) {
   
   //
-  // DEFINE METHODS
+  // Define controller methods by binding them to the controller 
+  // object, exactly how you would define LoopBack model remote methods.
   //
   ExampleController.sayHi = function(req, callback) {
     callback(null, { message: 'Hi!' });
   };
-
 
   ExampleController.callExampleService = function(req, callback) {
     var name = req.param('name');
@@ -23,7 +20,8 @@ module.exports = function(ExampleController) {
   };
 
   //
-  //  REGISTER METHODS
+  // An example of how services can be used. Controller routes 
+  // are set using a helper from ControllerService.
   //
   ControllerService.setMethods(ExampleController, [
     {

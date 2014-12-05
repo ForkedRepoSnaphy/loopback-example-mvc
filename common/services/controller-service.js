@@ -1,8 +1,10 @@
-var async = require('async');
 var _ = require('lodash');
 
 var ControllerService = {};
 
+//
+// Services are just exported modules.
+//
 ControllerService.setMethod = function(controller, method, http) {
   controller.remoteMethod(method, {
     accepts : {

@@ -3,7 +3,9 @@ var async = require('async');
 var _ = require('lodash');
 var commonPath = __dirname + '/../../common';
 
+//
 // Move *-controller.js files from common/models to common/controllers
+//
 module.exports = function addControllers(server, callback) {
   async.waterfall([
     // Filter out controller files from common/models

@@ -1,11 +1,17 @@
 var should = require('should');
 var supertest = require('supertest');
 var server = require('../../server/server');
-var Example = require('../../common/models/example');
+var ExampleModel = require('../../common/models/example');
 
-describe('Example', function() {
+//
+// Test the example model.
+//
+describe('ExampleModel', function() {
   var testString = 'Example';
 
+  // 
+  // Test the 'hi' remote method.
+  // 
   describe('/api/examples/hi', function() {
     it('should return the correct greeting', function(done) {
       supertest(server)

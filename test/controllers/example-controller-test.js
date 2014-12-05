@@ -2,8 +2,14 @@ var should = require('should');
 var supertest = require('supertest');
 var server = require('../../server/server');
 
+//
+// Test the example controller.
+//
 describe('ExampleController', function() {
 
+  //
+  // Test the GET /api/example-controller/hi route.
+  //
   describe('/api/example-controller/hi', function() {
     it('should return the correct response', function(done) {
       supertest(server)
@@ -26,6 +32,9 @@ describe('ExampleController', function() {
     });
   });
 
+  //
+  // Test the GET /api/example-controller/callService route.
+  //
   describe('/api/example-controller/callService', function() {
     it('should return the correct response', function(done) {
       supertest(server)

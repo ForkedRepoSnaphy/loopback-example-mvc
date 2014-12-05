@@ -1,7 +1,7 @@
 module.exports = function(Example) {
   
   //
-  // DEFINE METHODS
+  // Define LoopBack model remote methods.
   //
   Example.echo = function(string, callback) {
     callback(null, string);
@@ -12,7 +12,7 @@ module.exports = function(Example) {
   };
 
   //
-  //  REGISTER METHODS
+  //  Register remote methods.
   //
   Example.remoteMethod('echo', {
     accepts: {
