@@ -1,4 +1,4 @@
-loopback-m~~v~~c-sample
+loopback-example-m~~v~~c
 ===
 
 A [loopback](http://loopback.io/) MVC boilerplate. It supports [Sails.js](https://github.com/balderdashy/sails)-like services, and features tests for controllers, models, and services. At the moment, views are not implemented in this boilerplate.
