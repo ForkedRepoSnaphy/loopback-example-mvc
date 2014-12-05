@@ -21,9 +21,9 @@ Controllers are essentially equivalent to LoopBack models, and controller method
 
 Please take a look at the [LoopBack documentation](http://docs.strongloop.com/display/public/LB/Remote+methods) to learn more about how to define remote methods.
 
-By convention, controller files should end in `-controller.js`. This ensures that any controller files created through the `slc loopback:model` generator are moved from the initial `common/models` folder into the `common/controllers` directory. Starting the server automatically activates the [add-controllers.js]() boot script which facilitates this transfer.
+By convention, controller files should end in `-controller.js`. This ensures that any controller files created through the `slc loopback:model` generator are moved from the initial `common/models` folder into the `common/controllers` directory. Starting the server automatically activates the [add-controllers.js](server/boot/add-controllers.js) boot script which facilitates this transfer.
 
-Please note that `common/controllers` is listed as a model source directory in [model-config.json](), so LoopBack should have no trouble finding the controllers.
+Please note that `common/controllers` is listed as a model source directory in [model-config.json](server/model-config.json), so LoopBack should have no trouble finding the controllers.
 
 By convention, controllers are saved under the [common/controllers](common/controllers) directory.
 
